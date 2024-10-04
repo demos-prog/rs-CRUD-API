@@ -1,1 +1,8 @@
-[{"id":"ee5c6d7e-dca4-4e85-8c37-d5511b169f29","hobbies":[],"username":"Some user","age":999},{"id":"89d086dc-29ac-4970-b6e4-411fe9243281","hobbies":[],"username":"Some user","age":999},{"id":"db694e53-9012-4ba5-876f-705720af8999","hobbies":[],"username":"Some user","age":999},{"id":"ca3ce312-78df-4e24-a6de-b23e95a070bb","hobbies":[],"username":"Some user","age":999}]
+[
+  {
+    "id": "cf3bd687-b3d5-4075-bf4d-a4564261a709",
+    "hobbies": [],
+    "username": "Dimas",
+    "age": 1000
+  }
+]

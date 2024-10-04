@@ -25,7 +25,7 @@ export class UsersService {
   }
 
   // Create a user
-  async createUser(user: UserCreatingDto): Promise<string> {
+  async createUser(user: UserCreatingDto): Promise<User> {
     const newUser: User = {
       id: uuidv4(),
       hobbies: [],
@@ -46,7 +46,7 @@ export class UsersService {
               if (error) {
                 reject(error);
               } else {
-                resolve('User created');
+                resolve(newUser);
               }
             })
         })

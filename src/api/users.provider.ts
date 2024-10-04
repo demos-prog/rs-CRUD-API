@@ -27,20 +27,34 @@ export const usersRoutes = (req: IncomingMessage, res: ServerResponse) => {
 
   if (req.method === 'POST') {
     if (req.url === '/api/users') {
+      let body: any = [];
+      req.on('data', chunk => {
+        body.push(chunk);
+      });
+      req.on('end', () => {
+        body = Buffer.concat(body).toString();
+        const parsedBody = JSON.parse(body);
+        
+        if (!('username' in parsedBody && 'age' in parsedBody)) {
+          res.statusCode = 400;
+          res.end('Invalid request body');
+          return;
+        }
 
-      const newUser: UserCreatingDto = {
-        username: "Some user",
-        age: 999
-      }
+        const newUser: UserCreatingDto = {
+          username: parsedBody.username,
+          age: parsedBody.age
+        }
 
-      usersService.createUser(newUser)
-        .then(message => {
-          res.statusCode = 201;
-          res.end(message)
-        })
-        .catch(err => {
-          res.end(err)
-        })
+        usersService.createUser(newUser)
+          .then((user: User) => {
+            res.statusCode = 201;
+            res.end(JSON.stringify(user))
+          })
+          .catch(err => {
+            res.end(err)
+          })
+      });
     } else {
       notFoud(res);
     }
