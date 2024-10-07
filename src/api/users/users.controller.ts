@@ -1,12 +1,9 @@
 import { IncomingMessage, ServerResponse } from 'http';
-import { readFileSync } from 'fs';
-import path from "path";
 import { UsersService } from './users.service';
 import { UserCreatingDto } from './dto/user.dto';
 import { User } from '../../constants';
 import { UserUpdatingDto } from './dto/userUpdating.dto';
 
-const notFounfFile = path.join(__dirname, '..', '..', '404.html');
 
 const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
@@ -171,12 +168,6 @@ export const usersRoutes = (req: IncomingMessage, res: ServerResponse) => {
 };
 
 export function notFoud(res: ServerResponse) {
-  res.setHeader('Content-Type', 'text/html');
-  const file = readFileSync(notFounfFile, 'utf-8');
   res.statusCode = 404;
-  if (file) {
-    res.end(file)
-  } else {
-    res.end('Not Found')
-  }
+  res.end('Page not found');
 }
