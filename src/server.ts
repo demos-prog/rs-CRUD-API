@@ -1,31 +1,25 @@
 import http from 'http';
 import { IncomingMessage, ServerResponse } from 'http';
-import { readFileSync } from 'fs';
 import dotenv from 'dotenv';
-import path from "path";
-import { usersRoutes } from './api/users/users.controller'
-
-const htmlFile = path.join(__dirname, '404.html');
+import { notFoud, usersRoutes } from './api/users/users.controller';
 
 dotenv.config();
 
 const server = http.createServer((req: IncomingMessage, res: ServerResponse) => {
-  if (req.url === '/') {
-    res.end('Hello from server')
-  } else if (req.url?.startsWith('/api/users')) {
-    usersRoutes(req, res)
-  } else {
-    res.setHeader('Content-Type', 'text/html');
-    const file = readFileSync(htmlFile, 'utf-8');
-    res.statusCode = 404;
-    if (file) {
-      res.end(file)
+  try {
+    if (req.url?.startsWith('/api/users')) {
+      usersRoutes(req, res);
+    } else if (req.url === '/') {
+      res.end('Hello from server');
     } else {
-      res.end('Not Found')
+      notFoud(res);
     }
+  } catch (error) {
+    res.writeHead(500, { 'Content-Type': 'text/plain' });
+    res.end('Internal Server Error: Something went wrong while processing your request.');
   }
 });
 
-server.listen(process.env.PORT, () => {
+server.listen(process.env.PORT || 5000, () => {
   console.log(`Server listening on http://localhost:${process.env.PORT}`);
 })

@@ -170,7 +170,7 @@ export const usersRoutes = (req: IncomingMessage, res: ServerResponse) => {
   }
 };
 
-function notFoud(res: ServerResponse) {
+export function notFoud(res: ServerResponse) {
   res.setHeader('Content-Type', 'text/html');
   const file = readFileSync(notFounfFile, 'utf-8');
   res.statusCode = 404;
