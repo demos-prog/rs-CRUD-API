@@ -2,8 +2,12 @@ import http from 'http';
 import { IncomingMessage, ServerResponse } from 'http';
 import dotenv from 'dotenv';
 import { notFoud, usersRoutes } from './api/users/users.controller';
+import path from 'path';
+import { writeFileSync } from 'fs';
 
 dotenv.config();
+const usersFile = path.join(__dirname, 'api', 'users', 'users.json');
+writeFileSync(usersFile, '[]');
 
 const server = http.createServer((req: IncomingMessage, res: ServerResponse) => {
   try {

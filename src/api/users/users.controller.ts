@@ -18,7 +18,16 @@ export const usersRoutes = (req: IncomingMessage, res: ServerResponse) => {
   const usersService = new UsersService();
 
   if (req.method === 'GET') {
-    if (req.url?.startsWith('/api/users/')) {
+    if (req.url === '/api/users') {
+      usersService.users()
+        .then((users: User[]) => {
+          res.statusCode = 200;
+          res.end(JSON.stringify(users))
+        })
+        .catch(err => {
+          res.end(err)
+        })
+    } else if (req.url?.startsWith('/api/users/')) {
       const userId = req.url.split('/').pop();
       if (userId) {
         if (!isValidUserId(userId)) {
@@ -41,15 +50,6 @@ export const usersRoutes = (req: IncomingMessage, res: ServerResponse) => {
             res.end(err.toString())
           });
       }
-    } else if (req.url === '/api/users') {
-      usersService.users()
-        .then((users: User[]) => {
-          res.statusCode = 200;
-          res.end(JSON.stringify(users))
-        })
-        .catch(err => {
-          res.end(err)
-        })
     } else {
       notFoud(res);
     }

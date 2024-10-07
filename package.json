@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start:dev": "ts-node-dev src/server.ts",
-    "start:prod": "node dist/server.js",
+    "start:prod": "tsc && copyfiles -u 1 src/*.html dist/ && node dist/server.js",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "@types/uuid": "^10.0.0",
+    "copyfiles": "^2.4.1",
     "cross-env": "^7.0.3",
     "typescript": "^5.6.2"
   }

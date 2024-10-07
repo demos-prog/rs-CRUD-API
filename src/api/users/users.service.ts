@@ -1,4 +1,4 @@
-import { createReadStream, createWriteStream } from "fs";
+import { createReadStream, createWriteStream, writeFile } from "fs";
 import path from "path";
 import { v4 as uuidv4 } from 'uuid';
 import { UserCreatingDto } from "./dto/user.dto";
@@ -6,6 +6,9 @@ import { UserUpdatingDto } from "./dto/userUpdating.dto";
 import { User } from "../../constants";
 
 const usersFile = path.join(__dirname, 'users.json');
+if (!usersFile) {
+  writeFile(usersFile, '[]', ()=>{})
+}
 
 export class UsersService {
   // Get all users
