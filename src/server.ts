@@ -3,7 +3,7 @@ import { IncomingMessage, ServerResponse } from 'http';
 import { readFileSync } from 'fs';
 import dotenv from 'dotenv';
 import path from "path";
-import { usersRoutes } from './api/users.provider';
+import { usersRoutes } from './api/users/users.controller'
 
 const htmlFile = path.join(__dirname, '404.html');
 
