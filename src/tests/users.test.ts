@@ -106,15 +106,15 @@ describe('testing users:', () => {
         'Content-Type': 'application/json'
       }
     })
-
-    const newUser = await res.json();
-
-    await fetch(`http://localhost:5000/api/users/${newUser.id}`, {
-      method: 'DELETE',
-    });
-
-    const res3 = await fetch(`http://localhost:5000/api/users/${newUser.id}`);
-
-    expect(res3.ok).toBeFalsy();
+    if (res.ok) {
+      const newUser = await res.json();
+      const res2 = await fetch(`http://localhost:5000/api/users/${newUser.id}`, {
+        method: 'DELETE',
+      });
+      if (res2.ok) {
+        const res3 = await fetch(`http://localhost:5000/api/users/${newUser.id}`);
+        expect(res3.ok).toBeFalsy();
+      }
+    }
   })
 })

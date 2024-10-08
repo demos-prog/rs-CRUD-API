@@ -5,6 +5,7 @@
   "scripts": {
     "start:dev": "ts-node-dev src/server.ts",
     "start:prod": "tsc && node dist/server.js",
+    "start:multi": "",
     "jest":"jest --silent",
     "test": "start-server-and-test start:dev http://localhost:5000 jest",
     "build": "tsc"
