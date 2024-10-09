@@ -7,7 +7,7 @@ import { User } from "../../constants";
 
 const usersFile = path.join(__dirname, 'users.json');
 if (!usersFile) {
-  writeFile(usersFile, '[]', ()=>{})
+  writeFile(usersFile, '[]', () => { })
 }
 
 export class UsersService {
@@ -45,11 +45,16 @@ export class UsersService {
     return new Promise((resolve, reject) => {
       createReadStream(usersFile)
         .on('data', (chunk) => {
-          let users: User[] = JSON.parse(chunk.toString());
-          if (!Array.isArray(users)) {
+          let users: User[] = [];
+          try {
+            users = JSON.parse(chunk.toString());
+            if (!Array.isArray(users)) {
+              users = [];
+            }
+          } catch (error) {
             users = [];
           }
-          users.push(newUser)
+          users.push(newUser);
 
           createWriteStream(usersFile)
             .write(JSON.stringify(users), (error) => {
@@ -58,9 +63,11 @@ export class UsersService {
               } else {
                 resolve(newUser);
               }
-            })
+            });
         })
-
+        .on('error', (error) => {
+          reject(error);
+        });
     });
   }
 
